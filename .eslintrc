@@ -1,0 +1,16 @@
+{
+	"rules": {
+		"no-undef": 2,
+		"prefer-const": 1,
+		"arrow-parens": "warn"
+	},
+	"parserOptions": {
+		"ecmaVersion": 2017,
+		"sourceType": "module"
+	},
+	"env": {
+		"es6": true,
+		"browser": true
+	},
+	"root": true
+}
