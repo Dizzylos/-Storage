@@ -1,34 +1,40 @@
 export const render = (canvas) => {
-  const ctx = canvas.getContext("2d");
+  const ctx = cvs.getContext('2d');
 
-  canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-
+  canvas.width = window.innerWidth;
+  
   const player = new Image();
-  player.src = "img/player.png";
-
-  const x = 565,
-    y = 230;
-
-  function draw() {
-    ctx.drawImage(player, x, y);
-  }
-
-  player.onload = draw;
-
-  window.onload = function() {
-    window.onkeydown = function(e) {
-      if (e.keyCode == 37) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.drawImage(player, (x -= 10), y);
-      } else if (e.keyCode == 39) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.drawImage(player, (x += 10), y);
-      }
-    };
+  player.src = '../assets/img/player.png'
+  
+  
+  let pos = {
+    x: canvas.width / 2 - 62,
+    y: canvas.height / 2 - 125
   };
+  
+  let speed = 5;
+  let keyPressed = false;
+  
+  document.addEventListener('keydown', (e) => {
+    keyPressed = true;
+  });
+  document.addEventListener('keyup', (e) => {
+    keyPressed = false;
+  });
+  
+  const draw = () => {
+    ctx.drawImage(player, pos.x, pos.y, 125, 250);
+  }
+  
+  const tick = () => {
+    if(keyPressed) {
+      pos.x += speed;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  
+    draw();
+    window.requestAnimationFrame(tick);
+  };
+  window.requestAnimationFrame(tick);
 };
