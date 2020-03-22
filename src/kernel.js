@@ -9,11 +9,11 @@ const road2 = new Image();
 const pit = new Image();
 const enemy = new Image();
 const player = new Image();
-road.src = 'img/bg.jpg'
-road2.src = 'img/bg.jpg'
-pit.src = 'img/pit2.png'
-enemy.src = 'img/car2.png'
-player.src = 'img/player.png'
+road.src = '..assets/img/bg.jpg'
+road2.src = '..assets/img/bg.jpg'
+pit.src = '..assets/img/pit2.png'
+enemy.src = '..assets/img/car2.png'
+player.src = '..assets/img/player.png'
 
 
 
