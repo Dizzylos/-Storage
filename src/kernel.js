@@ -16,7 +16,6 @@ enemy.src = '..assets/img/car2.png'
 player.src = '..assets/img/player.png'
 
 
-
 const playerState = {
     pos: {
     x: canvas.width / 2 + 70,
