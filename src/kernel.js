@@ -28,7 +28,7 @@ const playerState = {
 const enemyState = {
     pos: {
     x: canvas.width / 2 - 135,
-    y: !canvas.height - 280
+    y: -280
     },
     speed: 8
 };
