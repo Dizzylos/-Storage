@@ -152,6 +152,7 @@ const tick = () => {
             pitState.pos.x = canvas.width / 2 + 50;
         };
     };
+    
     if(playerState.pos.x + 5 <= pitState.pos.x + 145
         && playerState.pos.x + 175 >= pitState.pos.x + 100
         && playerState.pos.y + 10 <= pitState.pos.y + 120
