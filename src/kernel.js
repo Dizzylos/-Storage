@@ -114,6 +114,7 @@ const tick = () => {
     roadState2.pos.y += roadState2.speed;
 
     // Вражеская машина
+    enemyState.pos.y += enemyState.speed;
     if(enemyState.pos.y > canvas.height){
         let way = Math.ceil(Math.random() * 2);
 
@@ -127,8 +128,7 @@ const tick = () => {
             enemyState.pos.x = canvas.width / 2 + 70;
         };
     };
-    enemyState.pos.y += enemyState.speed;
-
+    // Hitbox
     if(playerState.pos.x + 5 <= enemyState.pos.x + 120 
         && playerState.pos.x + 120 >= enemyState.pos.x + 5
         && playerState.pos.y + 10 <= enemyState.pos.y + 275
@@ -152,7 +152,7 @@ const tick = () => {
             pitState.pos.x = canvas.width / 2 + 50;
         };
     };
-
+    // Hitbox
     if(playerState.pos.x + 5 <= pitState.pos.x + 145
         && playerState.pos.x + 175 >= pitState.pos.x + 100
         && playerState.pos.y + 10 <= pitState.pos.y + 120
@@ -161,7 +161,6 @@ const tick = () => {
     };
 
     
-
 
     ctx.fillStyle = '#fff';
     ctx.font = '24px Verdana';
