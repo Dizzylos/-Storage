@@ -16,13 +16,15 @@ enemy.src = '..assets/img/car2.png'
 player.src = '..assets/img/player.png'
 
 
+
 const playerState = {
     pos: {
     x: canvas.width / 2 + 70,
     y: canvas.height - 295
     },
     keysPressed: {},
-    speed: 6    
+    speed: 0,
+    maxSpeed: 7    
 }
 
 const enemyState = {
@@ -63,6 +65,7 @@ document.addEventListener('keydown', (e) => {
 });
 document.addEventListener('keyup', (e) => {
     playerState.keysPressed[e.key] = false;
+    playerState.speed = 0;
 });
 
 
@@ -75,19 +78,31 @@ const draw = () => {
     ctx.drawImage(player, playerState.pos.x, playerState.pos.y, 135, 280);
 }
 
+// Счёт
+let timer = setInterval('interval()', 1000);
+let score = 0;
+
+const interval = () => {
+    score++;
+};
+
+
 let health = 3;
 
 const tick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    if(playerState.keysPressed.ArrowLeft){
+    
+    // Игрок
+    if(playerState.keysPressed.ArrowLeft && playerState.pos.x > 520){
+        playerState.speed += playerState.speed < playerState.maxSpeed ? 0.5 : 0;
         playerState.pos.x -= playerState.speed;
     }; 
-    if(playerState.keysPressed.ArrowRight){
+    if(playerState.keysPressed.ArrowRight && playerState.pos.x < 770){
+        playerState.speed += playerState.speed < playerState.maxSpeed ? 0.5 : 0;
         playerState.pos.x += playerState.speed;
     }; 
   
-
+    // Дорога
     if(roadState.pos.y > canvas.height){
         roadState.pos.y = roadState2.pos.y - 5800;
     };
@@ -98,8 +113,7 @@ const tick = () => {
     roadState.pos.y += roadState.speed;
     roadState2.pos.y += roadState2.speed;
 
-
-    enemyState.pos.y += enemyState.speed;
+    // Вражеская машина
     if(enemyState.pos.y > canvas.height){
         let way = Math.ceil(Math.random() * 2);
 
@@ -113,16 +127,17 @@ const tick = () => {
             enemyState.pos.x = canvas.width / 2 + 70;
         };
     };
+    enemyState.pos.y += enemyState.speed;
 
     if(playerState.pos.x + 5 <= enemyState.pos.x + 120 
         && playerState.pos.x + 120 >= enemyState.pos.x + 5
         && playerState.pos.y + 10 <= enemyState.pos.y + 275
         && playerState.pos.y + 275 >= enemyState.pos.y + 10){
-        alert('Авария!');
+        alert('Авария! Ваш счёт: ' + score);
         location.reload();
     };
 
-
+    // Яма
     pitState.pos.y += pitState.speed;
     if(pitState.pos.y > canvas.height){
         let way = Math.ceil(Math.random() * 2);
@@ -148,7 +163,11 @@ const tick = () => {
         alert('Конец игры');
     }
 
-    console.log(health);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '24px Verdana';
+    ctx.fillText('Жизни: ' + health, 1100, 100);
+    ctx.fillText('Счёт: ' + score, 1100, 50);
     draw();
     window.requestAnimationFrame(tick);
 };
