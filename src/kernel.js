@@ -152,7 +152,7 @@ const tick = () => {
             pitState.pos.x = canvas.width / 2 + 50;
         };
     };
-    
+
     if(playerState.pos.x + 5 <= pitState.pos.x + 145
         && playerState.pos.x + 175 >= pitState.pos.x + 100
         && playerState.pos.y + 10 <= pitState.pos.y + 120
@@ -160,15 +160,14 @@ const tick = () => {
         health -= 1;
     };
 
-    if(health == 0){
-        alert('Конец игры');
-    }
+    
 
 
     ctx.fillStyle = '#fff';
     ctx.font = '24px Verdana';
     ctx.fillText('Жизни: ' + health, 1100, 100);
     ctx.fillText('Счёт: ' + score, 1100, 50);
+    if(health == 0){alert('Конец игры');};
     draw();
     window.requestAnimationFrame(tick);
 };
