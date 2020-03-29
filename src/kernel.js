@@ -190,7 +190,6 @@ const tick = () => {
     ctx.fillText('Жизни: ' + health, 1100, 100);
     ctx.fillText('Топливо: ' + fuel, 1100, 150);
     if (health == 0) alert('Конец игры');   
-    console.log(roadState.speed); 
     draw();
     window.requestAnimationFrame(tick);
 };
