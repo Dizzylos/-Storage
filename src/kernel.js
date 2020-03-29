@@ -9,11 +9,11 @@ const road2 = new Image();
 const pit = new Image();
 const enemy = new Image();
 const player = new Image();
-road.src = '..assets/img/bg.jpg'
-road2.src = '..assets/img/bg.jpg'
-pit.src = '..assets/img/pit2.png'
-enemy.src = '..assets/img/car2.png'
-player.src = '..assets/img/player.png'
+road.src = '../assets/img/bg.jpg'
+road2.src = '../assets/img/bg.jpg'
+pit.src = '../assets/img/pit2.png'
+enemy.src = '../assets/img/car2.png'
+player.src = '../assets/img/player.png'
 
 
 
@@ -184,7 +184,7 @@ const tick = () => {
 
 
 
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#1E1E1E';
     ctx.font = '24px Verdana';
     ctx.fillText('Счёт: ' + score, 1100, 50);
     ctx.fillText('Жизни: ' + health, 1100, 100);
