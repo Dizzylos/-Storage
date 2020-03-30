@@ -155,7 +155,7 @@ const tick = () => {
         && playerState.pos.x + 120 >= enemyState.pos.x + 5
         && playerState.pos.y + 10 <= enemyState.pos.y + 275
         && playerState.pos.y + 275 >= enemyState.pos.y + 10) {
-        alert('Авария! Ваш счёт: ' + score);
+        alert(`Авария! Ваш счёт: ${score}`);
         location.reload();
     };
 
@@ -186,9 +186,9 @@ const tick = () => {
 
     ctx.fillStyle = '#1E1E1E';
     ctx.font = '24px Verdana';
-    ctx.fillText('Счёт: ' + score, 1100, 50);
-    ctx.fillText('Жизни: ' + health, 1100, 100);
-    ctx.fillText('Топливо: ' + fuel, 1100, 150);
+    ctx.fillText(`Счёт: ${score}`, 1100, 50);
+    ctx.fillText(`Жизни: ${health}`, 1100, 100);
+    ctx.fillText(`Топливо: ${fuel}`, 1100, 150);
     if (health == 0) alert('Конец игры');   
     draw();
     window.requestAnimationFrame(tick);
