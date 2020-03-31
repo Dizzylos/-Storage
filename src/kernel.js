@@ -24,7 +24,7 @@ const playerState = {
     },
     keysPressed: {},
     speed: 0,
-    maxSpeed: 7    
+    maxSpeed: 7
 }
 
 const enemyState = {
@@ -82,20 +82,43 @@ const draw = () => {
 
 // Счёт
 let score = 0;
-setInterval('scoreUp()', 1000);
-const scoreUp = () => {
+setInterval(() => {
     score++;
-};
+}, 1000);
 
 // Топливо
 let fuel = 100;
-setInterval('fuelDown()', 1000)
-const fuelDown = () => {
+setInterval(() => {
     if (fuel > 0) {
         fuel--;
     }
+}, 1000)
+
+// Таймер
+let sec = 0;
+let min = `0${0}`;
+
+const timer = () => {
+    sec++;
+    if (sec < 10) {
+        sec = `0${sec}`;
+    };
+
+    if (sec == 60) {
+        min++;
+        if (min) {
+            min = `0${min}`;
+        };
+        sec = `0${0}`;
+    };
 }
 
+timer();
+setInterval(() => {
+   timer(); 
+}, 1000);
+
+// Жизни
 let health = 3;
 
 const tick = () => {
@@ -189,6 +212,7 @@ const tick = () => {
     ctx.fillText(`Счёт: ${score}`, 1100, 50);
     ctx.fillText(`Жизни: ${health}`, 1100, 100);
     ctx.fillText(`Топливо: ${fuel}`, 1100, 150);
+    ctx.fillText(`Таймер: ${min}:${sec}`, 1100, 200);
     if (health == 0) alert('Конец игры');   
     draw();
     window.requestAnimationFrame(tick);
