@@ -80,13 +80,13 @@ const draw = () => {
     ctx.drawImage(player, playerState.pos.x, playerState.pos.y, 135, 280);
 }
 
-// Счёт
+// Score
 let score = 0;
 setInterval(() => {
     score++;
 }, 1000);
 
-// Топливо
+// Fuel
 let fuel = 100;
 setInterval(() => {
     if (fuel > 0) {
@@ -94,7 +94,7 @@ setInterval(() => {
     }
 }, 1000)
 
-// Таймер
+// Timer
 let sec = 0;
 let min = `0${0}`;
 
@@ -118,13 +118,13 @@ setInterval(() => {
    timer(); 
 }, 1000);
 
-// Жизни
+// Health
 let health = 3;
 
 const tick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Игрок
+    // Player
     if (playerState.keysPressed.ArrowLeft && playerState.pos.x > 520) {
         playerState.speed += playerState.speed < playerState.maxSpeed ? 0.5 : 0;
         playerState.pos.x -= playerState.speed;
@@ -145,7 +145,7 @@ const tick = () => {
         }
     };
   
-    // Дорога
+    // Road
     roadState.pos.y += roadState.speed;
     roadState2.pos.y += roadState2.speed;
 
@@ -158,7 +158,7 @@ const tick = () => {
 
  
 
-    // Вражеская машина
+    // EnemyCar
     enemyState.pos.y += enemyState.speed;
     if (enemyState.pos.y > canvas.height) {
         let way = Math.ceil(Math.random() * 2);
@@ -182,7 +182,7 @@ const tick = () => {
         location.reload();
     };
 
-    // Яма
+    // Pit
     pitState.pos.y += pitState.speed;
     if (pitState.pos.y > canvas.height) {
         let way = Math.ceil(Math.random() * 2);
