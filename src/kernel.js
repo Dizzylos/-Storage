@@ -118,8 +118,8 @@ setInterval(() => {
    timer(); 
 }, 1000);
 
-// Health
-let health = 3;
+// lives
+let lives = 3;
 
 const tick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -202,7 +202,7 @@ const tick = () => {
         && playerState.pos.x + 175 >= pitState.pos.x + 100
         && playerState.pos.y + 10 <= pitState.pos.y + 120
         && playerState.pos.y + 275 >= pitState.pos.y + 60) {
-        health -= 1;
+        lives -= 1;
     };
 
 
@@ -210,10 +210,10 @@ const tick = () => {
     ctx.fillStyle = '#1E1E1E';
     ctx.font = '24px Verdana';
     ctx.fillText(`Счёт: ${score}`, 1100, 50);
-    ctx.fillText(`Жизни: ${health}`, 1100, 100);
+    ctx.fillText(`Жизни: ${lives}`, 1100, 100);
     ctx.fillText(`Топливо: ${fuel}`, 1100, 150);
     ctx.fillText(`Таймер: ${min}:${sec}`, 1100, 200);
-    if (health == 0) alert('Конец игры');   
+    if (lives == 0) alert('Конец игры');   
     draw();
     window.requestAnimationFrame(tick);
 };
