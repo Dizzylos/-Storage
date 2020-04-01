@@ -56,7 +56,7 @@ const roadState2 = {
 const pitState = {
     pos: {
     x: canvas.width / 2 - 155,
-    y: !canvas.height - 280
+    y: -280
     },
     speed: 5,
     minSpeed: 0
@@ -106,7 +106,7 @@ const timer = () => {
 
     if (sec == 60) {
         min++;
-        if (min) {
+        if (min < `0${10}`) {
             min = `0${min}`;
         };
         sec = `0${0}`;
