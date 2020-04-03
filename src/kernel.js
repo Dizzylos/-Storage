@@ -5,18 +5,16 @@ canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
 const road = new Image();
-const road2 = new Image();
 const pit = new Image();
 const enemy = new Image();
 const player = new Image();
 road.src = '../assets/img/bg.jpg'
-road2.src = '../assets/img/bg.jpg'
 pit.src = '../assets/img/pit2.png'
 enemy.src = '../assets/img/car2.png'
 player.src = '../assets/img/player.png'
 
 
-
+// player
 const playerState = {
     pos: {
     x: canvas.width / 2 + 70,
@@ -27,6 +25,7 @@ const playerState = {
     maxSpeed: 7
 }
 
+// enemy
 const enemyState = {
     pos: {
     x: canvas.width / 2 - 135,
@@ -35,24 +34,22 @@ const enemyState = {
     speed: 8
 };
 
-const roadState = {
-    pos: {
-    x: canvas.width / 2 - 350,
-    y: canvas.height - 5800
+// backGround
+const backGround = [road, road];
+const backGroundState = {
+    pos1: {
+        x: canvas.width / 2 - 350,
+        y: canvas.height - 5800
+    },
+    pos2: {
+        x: canvas.width / 2 - 350,
+        y: 0
     },
     speed: 5,
     minSpeed: 0
 };
 
-const roadState2 = {
-    pos: {
-    x: canvas.width / 2 - 350,
-    y: 0
-    },
-    speed: 5,
-    minSpeed: 0
-};
-
+// pit
 const pitState = {
     pos: {
     x: canvas.width / 2 - 155,
@@ -73,8 +70,8 @@ document.addEventListener('keyup', (e) => {
 
 
 const draw = () => {
-    ctx.drawImage(road, roadState.pos.x, roadState.pos.y, 700, 5800);
-    ctx.drawImage(road2, roadState2.pos.x, roadState2.pos.y, 700, 5800);
+    ctx.drawImage(backGround[0], backGroundState.pos1.x, backGroundState.pos1.y, 700, 5800);
+    ctx.drawImage(backGround[1], backGroundState.pos2.x, backGroundState.pos2.y, 700, 5800);
     ctx.drawImage(pit, pitState.pos.x, pitState.pos.y, 175, 150)
     ctx.drawImage(enemy, enemyState.pos.x, enemyState.pos.y, 135, 280);
     ctx.drawImage(player, playerState.pos.x, playerState.pos.y, 135, 280);
@@ -89,9 +86,7 @@ setInterval(() => {
 // Fuel
 let fuel = 100;
 setInterval(() => {
-    if (fuel > 0) {
-        fuel--;
-    }
+    if (fuel > 0) fuel--;
 }, 1000)
 
 // Timer
@@ -137,24 +132,22 @@ const tick = () => {
     if (fuel <= 0) {
         playerState.maxSpeed = 0;
         pitState.speed -= pitState.speed > pitState.minSpeed ? 0.05 : 0;
-        roadState.speed -= roadState.speed > roadState.minSpeed ? 0.05 : 0;
-        roadState2.speed -= roadState2.speed > roadState2.minSpeed ? 0.05 : 0;
-        if (roadState.speed <= 0) {
+        backGroundState.speed -= backGroundState.speed > backGroundState.minSpeed ? 0.05 : 0;
+        if (backGroundState.speed <= 0) {
             alert('Топливо закончилось');
             location.reload();
         }
     };
-  
-    // Road
-    roadState.pos.y += roadState.speed;
-    roadState2.pos.y += roadState2.speed;
 
-    if (roadState.pos.y > canvas.height) {
-        roadState.pos.y = roadState2.pos.y - 5800;
-    };
-    if (roadState2.pos.y > canvas.height) {
-        roadState2.pos.y = roadState.pos.y - 5800;
-    };
+    // backGround
+    backGroundState.pos1.y += backGroundState.speed
+    backGroundState.pos2.y += backGroundState.speed
+    if (backGroundState.pos1.y > canvas.height) {
+        backGroundState.pos1.y = backGroundState.pos2.y - 5800
+    }
+    if (backGroundState.pos2.y > canvas.height) {
+        backGroundState.pos2.y = backGroundState.pos1.y - 5800
+    }
 
  
 
