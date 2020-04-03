@@ -8,10 +8,10 @@ const road = new Image();
 const pit = new Image();
 const enemy = new Image();
 const player = new Image();
-road.src = '../assets/img/bg.jpg'
-pit.src = '../assets/img/pit2.png'
-enemy.src = '../assets/img/car2.png'
-player.src = '../assets/img/player.png'
+road.src = '../assets/img/bg.jpg';
+pit.src = '../assets/img/pit2.png';
+enemy.src = '../assets/img/car2.png';
+player.src = '../assets/img/player.png';
 
 
 // player
@@ -23,7 +23,7 @@ const playerState = {
     keysPressed: {},
     speed: 0,
     maxSpeed: 7
-}
+};
 
 // enemy
 const enemyState = {
@@ -69,25 +69,19 @@ document.addEventListener('keyup', (e) => {
 });
 
 
-const draw = () => {
-    ctx.drawImage(backGround[0], backGroundState.pos1.x, backGroundState.pos1.y, 700, 5800);
-    ctx.drawImage(backGround[1], backGroundState.pos2.x, backGroundState.pos2.y, 700, 5800);
-    ctx.drawImage(pit, pitState.pos.x, pitState.pos.y, 175, 150)
-    ctx.drawImage(enemy, enemyState.pos.x, enemyState.pos.y, 135, 280);
-    ctx.drawImage(player, playerState.pos.x, playerState.pos.y, 135, 280);
-}
-
 // Score
 let score = 0;
 setInterval(() => {
     score++;
 }, 1000);
 
+
 // Fuel
 let fuel = 100;
 setInterval(() => {
     if (fuel > 0) fuel--;
-}, 1000)
+}, 1000);
+
 
 // Timer
 let sec = 0;
@@ -106,15 +100,25 @@ const timer = () => {
         };
         sec = `0${0}`;
     };
-}
+};
 
 timer();
 setInterval(() => {
    timer(); 
 }, 1000);
 
+
 // lives
 let lives = 3;
+
+
+const draw = () => {
+    ctx.drawImage(backGround[0], backGroundState.pos1.x, backGroundState.pos1.y, 700, 5800);
+    ctx.drawImage(backGround[1], backGroundState.pos2.x, backGroundState.pos2.y, 700, 5800);
+    ctx.drawImage(pit, pitState.pos.x, pitState.pos.y, 175, 150)
+    ctx.drawImage(enemy, enemyState.pos.x, enemyState.pos.y, 135, 280);
+    ctx.drawImage(player, playerState.pos.x, playerState.pos.y, 135, 280);
+};
 
 const tick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -136,18 +140,18 @@ const tick = () => {
         if (backGroundState.speed <= 0) {
             alert('Топливо закончилось');
             location.reload();
-        }
+        };
     };
 
     // backGround
-    backGroundState.pos1.y += backGroundState.speed
-    backGroundState.pos2.y += backGroundState.speed
+    backGroundState.pos1.y += backGroundState.speed;
+    backGroundState.pos2.y += backGroundState.speed;
     if (backGroundState.pos1.y > canvas.height) {
         backGroundState.pos1.y = backGroundState.pos2.y - 5800
-    }
+    };
     if (backGroundState.pos2.y > canvas.height) {
         backGroundState.pos2.y = backGroundState.pos1.y - 5800
-    }
+    };
 
  
 
@@ -181,7 +185,7 @@ const tick = () => {
 
         if (way == 1) {
             pitState.pos.y = -500;
-            pitState.pos.x = canvas.width / 2 - 155
+            pitState.pos.x = canvas.width / 2 - 155;
         };
         if (way == 2) {
             pitState.pos.y = -500;
