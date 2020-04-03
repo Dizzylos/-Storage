@@ -203,7 +203,7 @@ const tick = () => {
 
 
     ctx.fillStyle = '#1E1E1E';
-    ctx.font = '24px Verdana';
+    ctx.font = '24px Tahoma';
     ctx.fillText(`Счёт: ${score}`, 1100, 50);
     ctx.fillText(`Жизни: ${lives}`, 1100, 100);
     ctx.fillText(`Топливо: ${fuel}`, 1100, 150);
