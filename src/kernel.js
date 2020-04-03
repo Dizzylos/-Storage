@@ -25,7 +25,7 @@ const playerState = {
     maxSpeed: 7
 };
 
-// enemy
+// enemyCar
 const enemyState = {
     pos: {
     x: canvas.width / 2 - 135,
