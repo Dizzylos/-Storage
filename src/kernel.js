@@ -160,7 +160,6 @@ const tick = () => {
             enemyState.pos.y = -2000;
             enemyState.pos.x = canvas.width / 2 - 130;
         };
-
         if (way == 2) {
             enemyState.pos.y = -2000;
             enemyState.pos.x = canvas.width / 2 + 70;
@@ -184,7 +183,6 @@ const tick = () => {
             pitState.pos.y = -500;
             pitState.pos.x = canvas.width / 2 - 155
         };
-
         if (way == 2) {
             pitState.pos.y = -500;
             pitState.pos.x = canvas.width / 2 + 50;
