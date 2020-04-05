@@ -8,10 +8,12 @@ const road = new Image();
 const pit = new Image();
 const enemy = new Image();
 const player = new Image();
+const heart = new Image();
 road.src = '../assets/img/bg.jpg';
 pit.src = '../assets/img/pit2.png';
 enemy.src = '../assets/img/car2.png';
 player.src = '../assets/img/player.png';
+heart.src = '../assets/img/heart.png';
 
 
 // player
@@ -34,6 +36,16 @@ const enemyState = {
     speed: 8
 };
 
+// pit
+const pitState = {
+    pos: {
+    x: canvas.width / 2 - 155,
+    y: -150
+    },
+    speed: 5,
+    minSpeed: 0
+};
+
 // backGround
 const backGround = [road, road];
 const backGroundState = {
@@ -49,25 +61,6 @@ const backGroundState = {
     minSpeed: 0
 };
 
-// pit
-const pitState = {
-    pos: {
-    x: canvas.width / 2 - 155,
-    y: -280
-    },
-    speed: 5,
-    minSpeed: 0
-};
-
-
-document.addEventListener('keydown', (e) => {
-    playerState.keysPressed[e.key] = true;
-});
-document.addEventListener('keyup', (e) => {
-    playerState.keysPressed[e.key] = false;
-    playerState.speed = 0;
-});
-
 
 // Score
 let score = 0;
@@ -75,13 +68,11 @@ setInterval(() => {
     score++;
 }, 1000);
 
-
 // Fuel
 let fuel = 100;
 setInterval(() => {
     if (fuel > 0) fuel--;
 }, 1000);
-
 
 // Timer
 let sec = 0;
@@ -107,10 +98,18 @@ setInterval(() => {
    timer(); 
 }, 1000);
 
-
 // lives
-let lives = 3;
+let lives = [heart, heart, heart];
+let hit = false;
 
+
+document.addEventListener('keydown', (e) => {
+    playerState.keysPressed[e.key] = true;
+});
+document.addEventListener('keyup', (e) => {
+    playerState.keysPressed[e.key] = false;
+    playerState.speed = 0;
+});
 
 const draw = () => {
     ctx.drawImage(backGround[0], backGroundState.pos1.x, backGroundState.pos1.y, 700, 5800);
@@ -118,6 +117,9 @@ const draw = () => {
     ctx.drawImage(pit, pitState.pos.x, pitState.pos.y, 175, 150)
     ctx.drawImage(enemy, enemyState.pos.x, enemyState.pos.y, 135, 280);
     ctx.drawImage(player, playerState.pos.x, playerState.pos.y, 135, 280);
+    ctx.drawImage(lives[0], 1075, 20);
+    ctx.drawImage(lives[1], 1160, 20);
+    ctx.drawImage(lives[2], 1245, 20);
 };
 
 const tick = () => {
@@ -125,18 +127,18 @@ const tick = () => {
     
     // Player
     if (playerState.keysPressed.ArrowLeft && playerState.pos.x > 520) {
-        playerState.speed += playerState.speed < playerState.maxSpeed ? 0.5 : 0;
+        playerState.speed += (playerState.speed < playerState.maxSpeed) ? 0.5 : 0;
         playerState.pos.x -= playerState.speed;
     }; 
     if (playerState.keysPressed.ArrowRight && playerState.pos.x < 770) {
-        playerState.speed += playerState.speed < playerState.maxSpeed ? 0.5 : 0;
+        playerState.speed += (playerState.speed < playerState.maxSpeed) ? 0.5 : 0;
         playerState.pos.x += playerState.speed;
     }; 
 
     if (fuel <= 0) {
         playerState.maxSpeed = 0;
-        pitState.speed -= pitState.speed > pitState.minSpeed ? 0.05 : 0;
-        backGroundState.speed -= backGroundState.speed > backGroundState.minSpeed ? 0.05 : 0;
+        pitState.speed -= (pitState.speed > pitState.minSpeed) ? 0.05 : 0;
+        backGroundState.speed -= (backGroundState.speed > backGroundState.minSpeed) ? 0.05 : 0;
         if (backGroundState.speed <= 0) {
             alert('Топливо закончилось');
             location.reload();
@@ -152,8 +154,6 @@ const tick = () => {
     if (backGroundState.pos2.y > canvas.height) {
         backGroundState.pos2.y = backGroundState.pos1.y - 5800
     };
-
- 
 
     // EnemyCar
     enemyState.pos.y += enemyState.speed;
@@ -195,20 +195,26 @@ const tick = () => {
     // Hitbox
     if (playerState.pos.x + 5 <= pitState.pos.x + 145
         && playerState.pos.x + 175 >= pitState.pos.x + 100
-        && playerState.pos.y + 10 <= pitState.pos.y + 120
-        && playerState.pos.y + 275 >= pitState.pos.y + 60) {
-        lives -= 1;
+        && playerState.pos.y + 10 <= pitState.pos.y + 100
+        && playerState.pos.y + 275 >= pitState.pos.y + 60 && !hit) {
+            lives.pop();
+            hit = true;
+            setTimeout(() => {
+                hit = false;
+            }, 1100);
     };
 
 
 
     ctx.fillStyle = '#1E1E1E';
     ctx.font = '24px Tahoma';
-    ctx.fillText(`Счёт: ${score}`, 1100, 50);
-    ctx.fillText(`Жизни: ${lives}`, 1100, 100);
+    ctx.fillText(`Таймер: ${min}:${sec}`, 50, 100);
+    ctx.fillText(`Счёт: ${score}`, 50, 150);
     ctx.fillText(`Топливо: ${fuel}`, 1100, 150);
-    ctx.fillText(`Таймер: ${min}:${sec}`, 1100, 200);
-    if (lives == 0) alert('Конец игры');   
+    if (lives.length == 0) {
+        alert('Конец игры'); 
+        location.reload();
+    };  
     draw();
     window.requestAnimationFrame(tick);
 };
