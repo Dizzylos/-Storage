@@ -74,6 +74,10 @@ setInterval(() => {
     if (fuel > 0) fuel--;
 }, 1000);
 
+// lives
+let lives = 3;
+let hit = false;
+
 // Timer
 let sec = 0;
 let min = `0${0}`;
@@ -98,10 +102,6 @@ setInterval(() => {
    timer(); 
 }, 1000);
 
-// lives
-let lives = [heart, heart, heart];
-let hit = false;
-
 
 document.addEventListener('keydown', (e) => {
     playerState.keysPressed[e.key] = true;
@@ -114,17 +114,17 @@ document.addEventListener('keyup', (e) => {
 const draw = () => {
     ctx.drawImage(backGround[0], backGroundState.pos1.x, backGroundState.pos1.y, 700, 5800);
     ctx.drawImage(backGround[1], backGroundState.pos2.x, backGroundState.pos2.y, 700, 5800);
-    ctx.drawImage(pit, pitState.pos.x, pitState.pos.y, 175, 150)
+    ctx.drawImage(pit, pitState.pos.x, pitState.pos.y, 175, 150);
     ctx.drawImage(enemy, enemyState.pos.x, enemyState.pos.y, 135, 280);
     ctx.drawImage(player, playerState.pos.x, playerState.pos.y, 135, 280);
-    ctx.drawImage(lives[0], 1075, 20);
-    ctx.drawImage(lives[1], 1160, 20);
-    ctx.drawImage(lives[2], 1245, 20);
+    for(let i = 0; i < lives; i++){
+        ctx.drawImage(heart,  1065 + (100 * i), 20);
+    };
 };
 
 const tick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Player
     if (playerState.keysPressed.ArrowLeft && playerState.pos.x > 520) {
         playerState.speed += (playerState.speed < playerState.maxSpeed) ? 0.5 : 0;
@@ -197,7 +197,7 @@ const tick = () => {
         && playerState.pos.x + 175 >= pitState.pos.x + 100
         && playerState.pos.y + 10 <= pitState.pos.y + 100
         && playerState.pos.y + 275 >= pitState.pos.y + 60 && !hit) {
-            lives.pop();
+            lives--;
             hit = true;
             setTimeout(() => {
                 hit = false;
@@ -205,16 +205,15 @@ const tick = () => {
     };
 
 
-
     ctx.fillStyle = '#1E1E1E';
     ctx.font = '24px Tahoma';
     ctx.fillText(`Таймер: ${min}:${sec}`, 50, 100);
     ctx.fillText(`Счёт: ${score}`, 50, 150);
     ctx.fillText(`Топливо: ${fuel}`, 1100, 150);
-    if (lives.length == 0) {
-        alert('Конец игры'); 
-        location.reload();
-    };  
+    if (lives == 0) {
+        alert('Конец игры');
+        location.reload();   
+    };
     draw();
     window.requestAnimationFrame(tick);
 };
