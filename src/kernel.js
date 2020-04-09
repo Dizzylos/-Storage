@@ -34,7 +34,7 @@ const playerState = {
 const enemyState = {
     pos: {
     x: canvas.width / 2 - 135,
-    y: 2800
+    y: canvas.height
     },
     speed: 8
 };
@@ -43,7 +43,7 @@ const enemyState = {
 const pitState = {
     pos: {
     x: canvas.width / 2 - 155,
-    y: 1500
+    y: canvas.height
     },
     speed: 5,
     minSpeed: 0
@@ -53,7 +53,7 @@ const pitState = {
 const fuelState = {
     pos: {
     x:canvas.width / 2 - 155,
-    y: 1500
+    y: canvas.height
     },
     speed: 5,
     minSpeed: 0
