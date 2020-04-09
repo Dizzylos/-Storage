@@ -9,11 +9,14 @@ const pit = new Image();
 const enemy = new Image();
 const player = new Image();
 const heart = new Image();
+const barrelFuel = new Image();
 road.src = '../assets/img/bg.jpg';
 pit.src = '../assets/img/pit2.png';
 enemy.src = '../assets/img/car2.png';
 player.src = '../assets/img/player.png';
 heart.src = '../assets/img/heart.png';
+barrelFuel.src = '../assets/img/bank1.png'
+
 
 
 // player
@@ -31,7 +34,7 @@ const playerState = {
 const enemyState = {
     pos: {
     x: canvas.width / 2 - 135,
-    y: -280
+    y: 2800
     },
     speed: 8
 };
@@ -40,11 +43,26 @@ const enemyState = {
 const pitState = {
     pos: {
     x: canvas.width / 2 - 155,
-    y: -150
+    y: 1500
     },
     speed: 5,
     minSpeed: 0
 };
+
+// Fuel
+const fuelState = {
+    pos: {
+    x:canvas.width / 2 - 155,
+    y: 1500
+    },
+    speed: 5,
+    minSpeed: 0
+}
+
+let fuel = 100;
+setInterval(() => {
+    if (fuel > 0) fuel--;
+}, 1000);
 
 // backGround
 const backGround = [road, road];
@@ -66,12 +84,6 @@ const backGroundState = {
 let score = 0;
 setInterval(() => {
     score++;
-}, 1000);
-
-// Fuel
-let fuel = 100;
-setInterval(() => {
-    if (fuel > 0) fuel--;
 }, 1000);
 
 // lives
@@ -120,7 +132,9 @@ const draw = () => {
     for(let i = 0; i < lives; i++){
         ctx.drawImage(heart,  1065 + (100 * i), 20);
     };
+    ctx.drawImage(barrelFuel, fuelState.pos.x, fuelState.pos.y, 200, 125);
 };
+
 
 const tick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -161,11 +175,11 @@ const tick = () => {
         let way = Math.ceil(Math.random() * 2);
 
         if (way == 1) {
-            enemyState.pos.y = -2000;
+            enemyState.pos.y = Math.ceil(Math.random() * -1000) -2000;
             enemyState.pos.x = canvas.width / 2 - 130;
         };
         if (way == 2) {
-            enemyState.pos.y = -2000;
+            enemyState.pos.y = Math.ceil(Math.random() * -1000) -2000;
             enemyState.pos.x = canvas.width / 2 + 70;
         };
     };
@@ -184,15 +198,15 @@ const tick = () => {
         let way = Math.ceil(Math.random() * 2);
 
         if (way == 1) {
-            pitState.pos.y = -500;
+            pitState.pos.y = Math.ceil(Math.random() * -500)  -700;
             pitState.pos.x = canvas.width / 2 - 155;
         };
         if (way == 2) {
-            pitState.pos.y = -500;
+            pitState.pos.y = Math.ceil(Math.random() * -500)  -700;
             pitState.pos.x = canvas.width / 2 + 50;
         };
     };
-    // Hitbox
+    // // Hitbox
     if (playerState.pos.x + 5 <= pitState.pos.x + 145
         && playerState.pos.x + 175 >= pitState.pos.x + 100
         && playerState.pos.y + 10 <= pitState.pos.y + 100
@@ -204,8 +218,40 @@ const tick = () => {
             }, 1100);
     };
 
+    // Fuel
+    fuelState.pos.y += fuelState.speed;
+    if (fuelState.pos.y > canvas.height) {
+        let way = Math.ceil(Math.random() * 2);
 
-    ctx.fillStyle = '#1E1E1E';
+        if (way == 1) {
+            fuelState.pos.y = Math.ceil(Math.random() * -4000) - 2000;
+            fuelState.pos.x = canvas.width / 2 - 155;
+        };
+        if (way == 2) {
+            fuelState.pos.y = Math.ceil(Math.random() * -4000) - 2000;
+            fuelState.pos.x = canvas.width / 2 + 50;
+        };
+    };
+    // Hitbox
+    if (playerState.pos.x + 5 <= fuelState.pos.x + 125
+        && playerState.pos.x + 175 >= fuelState.pos.x + 125
+        && playerState.pos.y + 10 <= fuelState.pos.y + 100
+        && playerState.pos.y + 275 >= fuelState.pos.y + 60 && !hit) {
+            fuel+=10;
+            let way = Math.ceil(Math.random() * 2);
+
+            if (way == 1) {
+                fuelState.pos.y = Math.ceil(Math.random() * -4000) - 2000;
+                fuelState.pos.x = canvas.width / 2 - 155;
+            };
+            if (way == 2) {
+                fuelState.pos.y = Math.ceil(Math.random() * -4000) - 2000;
+                fuelState.pos.x = canvas.width / 2 + 50;
+            };
+        };
+
+
+    ctx.fillStyle = 'black';
     ctx.font = '24px Tahoma';
     ctx.fillText(`Таймер: ${min}:${sec}`, 50, 100);
     ctx.fillText(`Счёт: ${score}`, 50, 150);
